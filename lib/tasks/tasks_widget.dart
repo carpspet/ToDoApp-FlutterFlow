@@ -24,6 +24,8 @@ class _TasksWidgetState extends State<TasksWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TasksModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -143,16 +145,36 @@ class _TasksWidgetState extends State<TasksWidget> {
                         itemBuilder: (context, listViewIndex) {
                           final listViewTasksRecord =
                               listViewTasksRecordList[listViewIndex];
-                          return TaskWidget(
-                            key: Key(
-                                'Keyowv_${listViewIndex}_of_${listViewTasksRecordList.length}'),
-                            tasksDocument: listViewTasksRecord,
-                            checkAction: () async {
-                              await listViewTasksRecord.reference
-                                  .update(createTasksRecordData(
-                                completed: true,
-                              ));
+                          return InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed(
+                                'details',
+                                queryParameters: {
+                                  'taskDoc': serializeParam(
+                                    listViewTasksRecord,
+                                    ParamType.Document,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'taskDoc': listViewTasksRecord,
+                                },
+                              );
                             },
+                            child: TaskWidget(
+                              key: Key(
+                                  'Keyowv_${listViewIndex}_of_${listViewTasksRecordList.length}'),
+                              tasksDocument: listViewTasksRecord,
+                              checkAction: () async {
+                                await listViewTasksRecord.reference
+                                    .update(createTasksRecordData(
+                                  completed: true,
+                                ));
+                              },
+                            ),
                           );
                         },
                       );
