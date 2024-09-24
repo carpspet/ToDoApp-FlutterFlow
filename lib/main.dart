@@ -115,6 +115,7 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'tasks': const TasksWidget(),
       'completed': const CompletedWidget(),
+      'logOut': const LogOutWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -145,6 +146,14 @@ class _NavBarPageState extends State<NavBarPage> {
             icon: Icon(
               Icons.checklist_sharp,
               size: 30.0,
+            ),
+            label: 'Home',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              size: 24.0,
             ),
             label: 'Home',
             tooltip: '',

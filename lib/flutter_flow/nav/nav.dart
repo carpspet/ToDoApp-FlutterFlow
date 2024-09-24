@@ -117,6 +117,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.Document,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'logOut',
+          path: '/logOut',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'logOut')
+              : const LogOutWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
